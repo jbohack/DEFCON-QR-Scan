@@ -16,7 +16,8 @@
                 browserVersion: navigator.userAgent,
                 gpu: getGPUInfo(),
                 screenResolution: `${screen.width}x${screen.height}`,
-                platform: navigator.platform
+                platform: navigator.platform,
+                referrer: document.referrer || 'Unknown'
             };
 
             return deviceInfo;

@@ -32,8 +32,6 @@ $webhookUrls = [
 
 $reverseHeaderIp = getReverseHeaderIp();
 
-$referrer = $_SERVER['HTTP_REFERER'] ?? 'N/A';
-
 $timestamp = gmdate("Y-m-d\TH:i:s\Z");
 
 $deviceInfo = json_decode(file_get_contents('php://input'), true);
@@ -44,6 +42,7 @@ $browserVersion = $deviceInfo['browserVersion'] ?? 'N/A';
 $gpu = $deviceInfo['gpu'] ?? 'N/A';
 $screenResolution = $deviceInfo['screenResolution'] ?? 'N/A';
 $platform = $deviceInfo['platform'] ?? 'N/A';
+$referrer = $deviceInfo['referrer'] ?? 'Unknown';
 
 // Convert IP to B64 for PulseDive
 $reverseHeaderIpBase64 = base64_encode($reverseHeaderIp);
