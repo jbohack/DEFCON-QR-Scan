@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lullaby.cafe</title>
+</head>
+
+<body>
+    <script>
+        function getDeviceInformation() {
+            const deviceInfo = {
+                deviceType: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+                operatingSystem: navigator.platform,
+                browserVersion: navigator.userAgent,
+                gpu: getGPUInfo(),
+                screenResolution: `${screen.width}x${screen.height}`,
+                platform: navigator.platform
+            };
+
+            return deviceInfo;
+        }
+
+        function getGPUInfo() {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) {
+                return 'N/A';
+            }
+
+            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'N/A';
+        }
+
+        function sendDeviceInfo() {
+            const deviceInfo = getDeviceInformation();
+
+            fetch('info.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(deviceInfo)
+            }).then(() => {
+                window.location.href = 'https://lullaby.cafe';
+            });
+        }
+
+        sendDeviceInfo();
+    </script>
+</body>
+
+</html>
