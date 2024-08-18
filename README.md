@@ -4,6 +4,9 @@
 
 This project is a server-side solution that provides seamless URL redirection upon scanning a QR code. It not only redirects the user to a specified URL but also issues a Discord webhook notification, capturing and sending the IP address information of the client who scanned the QR code.
 
+## Output Example
+![image](https://github.com/user-attachments/assets/d34faa1c-332f-4181-b2e6-b3a5239eaf8d)
+
 ## Features
 
 - **Server-Side QR Code Redirection**: Redirects users to a specific URL after scanning the QR code.
