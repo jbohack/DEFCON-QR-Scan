@@ -106,7 +106,7 @@ $embed = [
         ]
     ],
     "footer" => [
-        "text" => "Made with 🩷 by emilia0001, inspired by RocketGod",
+        "text" => "Made with 🩷 by jbohack, inspired by RocketGod",
         "icon_url" => "https://cdn.lullaby.cafe/defcon/nyan.png"
     ],
     "thumbnail" => [
