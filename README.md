@@ -12,6 +12,7 @@ This project is a server-side solution that provides seamless URL redirection up
 - **Server-Side QR Code Redirection**: Redirects users to a specific URL after scanning the QR code.
 - **Discord Webhook Integration**: Sends a notification to a Discord channel with the IP address and other metadata of the client who scanned the QR code.
 - **IP Address Logging**: Captures the client's IP address for each scan and includes it in the webhook message.
+- **Optional MySQL Logging**: Stores scan metadata (IP, OS, device info, etc.) in a MySQL database.
 
 ## QR Code
 <img src="https://cdn.lullaby.cafe/defcon/qr_code.png" alt="QR Code" width="200"/>
@@ -20,6 +21,7 @@ This project is a server-side solution that provides seamless URL redirection up
 
 - **PHP**
 - **HTML**
+- **MySQL (Optional)**
 
 ## Installation
 
@@ -33,17 +35,25 @@ This project is a server-side solution that provides seamless URL redirection up
     cd DEFCON-QR-Scan
     ```
 
-4. Configure your environment variables for the redirect URL, Discord webhook URL, and other settings.
+4. Edit the `config.php` file to set your redirect URL, Discord webhook(s), and other options. MySQL logging can be optionally enabled in this file.
 
-5. Place the project files in your web server's root directory (e.g., `/var/www/html` for Apache).
+5. Rename `index.html` to `index.php` so the redirect URL can be injected dynamically from the config.
 
-6. Start your web server to run the application.
+6. Place the project files in your web server's root directory (e.g., `/var/www/html` for Apache).
+
+7. Start your web server to run the application.
 
 ## Configuration
 
-- **window.location.href (index.html)**: The URL to which users should be redirected after scanning the QR code.
-- **webhookUrls (info.php)**: The URL of the Discord webhook where notifications will be sent (Specify multiple if you wish).
-- **thumbnail => URL (info.php)**: The URL of the QR code to include in the Discord Webhook.
+All settings are centralized in `config.php`:
+
+- **redirectUrl**: The URL to which users should be redirected after scanning the QR code.
+- **webhookUrls**: One or more Discord webhook URL(s) where notifications will be sent.
+- **webhookUsername**: The display name used in the Discord webhook.
+- **webhookAvatar**: The avatar URL used for the webhook sender.
+- **webhookThumbnail**: The image shown in the Discord embed (typically the hosted QR code).
+- **enableMySQLLogging**: Set to `true` to log scan data to a MySQL database.
+- **mysql**: Configure MySQL connection details (host, user, password, database, and table name).
 
 ## Usage
 
