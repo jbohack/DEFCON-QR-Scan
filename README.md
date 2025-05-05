@@ -37,11 +37,9 @@ This project is a server-side solution that provides seamless URL redirection up
 
 4. Edit the `config.php` file to set your redirect URL, Discord webhook(s), and other options. MySQL logging can be optionally enabled in this file.
 
-5. Rename `index.html` to `index.php` so the redirect URL can be injected dynamically from the config.
+5. Place the project files in your web server's root directory (e.g., `/var/www/html` for Apache).
 
-6. Place the project files in your web server's root directory (e.g., `/var/www/html` for Apache).
-
-7. Start your web server to run the application.
+6. Start your web server to run the application.
 
 ## Configuration
 
