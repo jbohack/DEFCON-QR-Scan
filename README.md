@@ -1,4 +1,4 @@
-# QR Code Redirector with Discord Webhook Notification and Optional MySQL Logging/Scan Dashboard
+# QR Code Tracker with Real-time Discord Alerts & Analytics Dashboard
 
 ## About
 
