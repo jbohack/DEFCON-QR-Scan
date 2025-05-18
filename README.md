@@ -1,4 +1,4 @@
-# QR Code Redirector with Discord Webhook Notification
+# QR Code Redirector with Discord Webhook Notification and Optional MySQL Logging/Scan Dashboard
 
 ## About
 
@@ -14,6 +14,7 @@ This project is a server-side solution that provides seamless URL redirection up
 - **Discord Webhook Integration**: Sends a notification to a Discord channel with the IP address and other metadata of the client who scanned the QR code.
 - **IP Address Logging**: Captures the client's IP address for each scan and includes it in the webhook message.
 - **Optional MySQL Logging**: Stores scan metadata (IP, OS, device info, etc.) in a MySQL database.
+- **Optional Scan Dashboard**: Web-based interface to view and search historical scan data with filtering and pagination (`/scans/`). The dashboard is fully responsive and works on both desktop and mobile devices.
 
 ## QR Code
 <img src="https://cdn.lullaby.cafe/defcon/qr_code.png" alt="QR Code" width="200"/>
@@ -41,6 +42,16 @@ This project is a server-side solution that provides seamless URL redirection up
 5. Place the project files in your web server's root directory (e.g., `/var/www/html` for Apache).
 
 6. Start your web server to run the application.
+
+## Scan Dashboard
+
+When MySQL logging is enabled, access the scan dashboard at `/scans/` (example: [defcon.lullaby.cafe/scans/](https://defcon.lullaby.cafe/scans/)) to:
+
+- View historical scan data in a clean, sortable interface
+- Search across all scan metadata (IP, device, location, etc.)
+- Filter and paginate through scan results
+- View detailed device and location information for each scan
+- Fully responsive design that works on both desktop and mobile devices
 
 ## Configuration
 
