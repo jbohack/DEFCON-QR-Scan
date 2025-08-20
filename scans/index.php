@@ -561,6 +561,20 @@ $result = $stmt->get_result();
             border: 1px solid var(--accent);
         }
 
+        .pagination .ellipsis {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: default;
+            user-select: none;
+        }
+
+        .pagination .ellipsis:hover {
+            background: transparent;
+            transform: none;
+            box-shadow: none;
+        }
+
         .no-data {
             text-align: center;
             padding: 30px;
@@ -593,11 +607,20 @@ $result = $stmt->get_result();
 
             .pagination {
                 padding: 15px 0;
+                flex-wrap: wrap;
+                gap: 8px;
             }
 
             .pagination a, .pagination span {
-                padding: 10px 20px;
-                margin: 0 6px;
+                padding: 10px 16px;
+                margin: 0 2px;
+                min-width: 36px;
+                font-size: 14px;
+            }
+
+            .pagination .ellipsis {
+                padding: 10px 8px;
+                min-width: auto;
             }
         }
 
@@ -650,13 +673,22 @@ $result = $stmt->get_result();
             .pagination {
                 padding: 20px 0;
                 margin: 20px 0;
+                flex-wrap: wrap;
+                gap: 6px;
+                justify-content: center;
             }
 
             .pagination a, .pagination span {
-                min-width: 30px;
-                padding: 10px 15px;
-                margin: 0 5px;
-                font-size: 14px;
+                min-width: 32px;
+                padding: 8px 12px;
+                margin: 0 2px;
+                font-size: 13px;
+            }
+
+            .pagination .ellipsis {
+                padding: 8px 6px;
+                min-width: auto;
+                font-size: 13px;
             }
 
             .search-form {
@@ -836,13 +868,34 @@ $result = $stmt->get_result();
                 <?php if ($page > 1): ?>
                     <a href="?page=<?= max(1, $page - 1) ?>&per_page=<?= htmlspecialchars($perPage, ENT_QUOTES, 'UTF-8') ?>&search=<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">← Prev</a>
                 <?php endif; ?>
-                <?php for ($p = 1; $p <= $totalPages; $p++): ?>
+                
+                <?php
+                $range = 2;
+                $start = max(1, $page - $range);
+                $end = min($totalPages, $page + $range);
+                
+                if ($start > 1): ?>
+                    <a href="?page=1&per_page=<?= htmlspecialchars($perPage, ENT_QUOTES, 'UTF-8') ?>&search=<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">1</a>
+                    <?php if ($start > 2): ?>
+                        <span class="ellipsis">...</span>
+                    <?php endif; ?>
+                <?php endif; ?>
+                
+                <?php for ($p = $start; $p <= $end; $p++): ?>
                     <?php if ($p == $page): ?>
                         <span class="current"><?= $p ?></span>
                     <?php else: ?>
                         <a href="?page=<?= $p ?>&per_page=<?= htmlspecialchars($perPage, ENT_QUOTES, 'UTF-8') ?>&search=<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>"><?= $p ?></a>
                     <?php endif; ?>
                 <?php endfor; ?>
+                
+                <?php if ($end < $totalPages): ?>
+                    <?php if ($end < $totalPages - 1): ?>
+                        <span class="ellipsis">...</span>
+                    <?php endif; ?>
+                    <a href="?page=<?= $totalPages ?>&per_page=<?= htmlspecialchars($perPage, ENT_QUOTES, 'UTF-8') ?>&search=<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>"><?= $totalPages ?></a>
+                <?php endif; ?>
+                
                 <?php if ($page < $totalPages): ?>
                     <a href="?page=<?= min($totalPages, $page + 1) ?>&per_page=<?= htmlspecialchars($perPage, ENT_QUOTES, 'UTF-8') ?>&search=<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">Next →</a>
                 <?php endif; ?>
